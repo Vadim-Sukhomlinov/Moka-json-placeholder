@@ -1,11 +1,7 @@
 import { Card, CardContent, CardActions, Typography, Box } from "@mui/material";
 import { Article, Person } from "@mui/icons-material";
-import { type Post } from "../types";
+import { type PostCardProps } from "../types";
 
-interface PostCardProps {
-    post: Post;
-    onClick: () => void;
-}
 
 const PostCard = ({ post, onClick }: PostCardProps) => {
     const truncateText = (text: string, maxLength: number) => {

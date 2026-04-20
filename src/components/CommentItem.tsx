@@ -1,11 +1,7 @@
 import { Box, Typography, Divider, Paper } from "@mui/material";
 import { Comment as CommentIcon, Email } from "@mui/icons-material";
-import { type Comment } from "../types";
+import { type CommentItemProps } from "../types";
 
-interface CommentItemProps {
-    comment: Comment;
-    isLast?: boolean;
-}
 
 const CommentItem = ({ comment, isLast = false }: CommentItemProps) => {
     return (

@@ -45,6 +45,45 @@ export const lightTheme = createTheme({
         borderRadius: 12,
     },
     components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                html: {
+                    height: "100%",
+                    overflowY: "auto",
+                },
+                body: {
+                    height: "100%",
+                    margin: 0,
+                    padding: 0,
+                    overflowY: "auto",
+                },
+                "#root": {
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                },
+                "*": {
+                    margin: 0,
+                    padding: 0,
+                    boxSizing: "border-box",
+                },
+                "::-webkit-scrollbar": {
+                    width: "8px",
+                    height: "8px",
+                },
+                "::-webkit-scrollbar-track": {
+                    background: "rgba(0, 0, 0, 0.1)",
+                    borderRadius: "4px",
+                },
+                "::-webkit-scrollbar-thumb": {
+                    background: "rgba(0, 0, 0, 0.3)",
+                    borderRadius: "4px",
+                    "&:hover": {
+                        background: "rgba(0, 0, 0, 0.5)",
+                    },
+                },
+            },
+        },
         MuiButton: {
             styleOverrides: {
                 root: {
@@ -62,6 +101,15 @@ export const lightTheme = createTheme({
                         transform: "translateY(-4px)",
                         boxShadow: "0 12px 24px rgba(0,0,0,0.1)",
                     },
+                },
+            },
+        },
+        MuiContainer: {
+            styleOverrides: {
+                root: {
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
                 },
             },
         },
@@ -111,6 +159,45 @@ export const darkTheme = createTheme({
         borderRadius: 12,
     },
     components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                html: {
+                    height: "100%",
+                    overflowY: "auto",
+                },
+                body: {
+                    height: "100%",
+                    margin: 0,
+                    padding: 0,
+                    overflowY: "auto",
+                },
+                "#root": {
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                },
+                "*": {
+                    margin: 0,
+                    padding: 0,
+                    boxSizing: "border-box",
+                },
+                "::-webkit-scrollbar": {
+                    width: "8px",
+                    height: "8px",
+                },
+                "::-webkit-scrollbar-track": {
+                    background: "rgba(255, 255, 255, 0.1)",
+                    borderRadius: "4px",
+                },
+                "::-webkit-scrollbar-thumb": {
+                    background: "rgba(255, 255, 255, 0.3)",
+                    borderRadius: "4px",
+                    "&:hover": {
+                        background: "rgba(255, 255, 255, 0.5)",
+                    },
+                },
+            },
+        },
         MuiButton: {
             styleOverrides: {
                 root: {
@@ -128,6 +215,15 @@ export const darkTheme = createTheme({
                         transform: "translateY(-4px)",
                         boxShadow: "0 12px 24px rgba(0,0,0,0.3)",
                     },
+                },
+            },
+        },
+        MuiContainer: {
+            styleOverrides: {
+                root: {
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
                 },
             },
         },

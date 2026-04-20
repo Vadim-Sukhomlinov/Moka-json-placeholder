@@ -1,10 +1,7 @@
 import { Pagination as MuiPagination, Stack, Box } from "@mui/material";
+import type { PaginationProps } from "../types";
 
-interface PaginationProps {
-    currentPage: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-}
+
 
 const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
     if (totalPages <= 1) return null;

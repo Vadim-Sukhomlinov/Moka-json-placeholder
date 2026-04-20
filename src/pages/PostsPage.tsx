@@ -86,7 +86,6 @@ const PostsPage = () => {
         window.location.reload();
     };
 
-    // Состояние загрузки
     if (loading) {
         return (
             <Box
@@ -180,7 +179,7 @@ const PostsPage = () => {
             <Container maxWidth="lg" sx={{ flex: 1, pb: 4 }}>
                 <Grid container spacing={3}>
                     {currentPosts.map((post) => (
-                        <Grid size={{ xs: 12, sm: 6, md: 4 }} key={post.id}>
+                        <Grid item xs={12} sm={6} md={4} key={post.id}>
                             <PostCard post={post} onClick={() => handlePostClick(post.id)} />
                         </Grid>
                     ))}
@@ -188,7 +187,10 @@ const PostsPage = () => {
                     {/* Плейсхолдеры для сохранения высоты сетки */}
                     {placeholders.map((_, index) => (
                         <Grid
-                            size={{ xs: 12, sm: 6, md: 4 }}
+                            item
+                            xs={12}
+                            sm={6}
+                            md={4}
                             key={`placeholder-${index}`}
                             sx={{
                                 visibility: "hidden",

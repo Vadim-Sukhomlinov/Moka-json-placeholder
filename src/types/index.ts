@@ -14,3 +14,25 @@ export interface Comment {
     email: string;
     body: string;
 }
+
+export interface PostCardProps {
+    post: Post;
+    onClick: () => void;
+}
+
+export interface PaginationProps {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+}
+
+export interface CommentItemProps {
+    comment: Comment;
+    isLast?: boolean;
+}
+
+export interface ThemeContextValue {
+    toggleTheme: () => void;
+    isDarkMode: boolean;
+    gradientBackground: string;
+}

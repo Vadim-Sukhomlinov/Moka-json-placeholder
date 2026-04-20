@@ -1,12 +1,8 @@
 import React, { createContext, useContext, type ReactNode } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material";
 import { useTheme } from "../hooks/useTheme";
+import type { ThemeContextValue } from "../types";
 
-interface ThemeContextValue {
-    toggleTheme: () => void;
-    isDarkMode: boolean;
-    gradientBackground: string;
-}
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 

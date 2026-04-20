@@ -137,7 +137,6 @@ const PostPage = () => {
 
     return (
         <Container maxWidth="md" sx={{ py: 2 }}>
-            {/* Хлебные крошки */}
             <Breadcrumbs sx={{ mb: 3, color: "white" }}>
                 <MuiLink
                     color="inherit"

@@ -1,30 +1,59 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ThemeProvider, CssBaseline, Box, Container } from "@mui/material";
-import { lightTheme } from "./theme";
+import { CssBaseline, Box, GlobalStyles } from "@mui/material";
+import { ThemeProvider as CustomThemeProvider, useThemeContext } from "./context/ThemeContext";
 import PostsPage from "./pages/PostsPage";
 import PostPage from "./pages/PostPage";
 
-function App() {
+const globalStyles = {
+  html: {
+    height: "100%",
+    overflowY: "auto",
+  },
+  body: {
+    height: "100%",
+    margin: 0,
+    padding: 0,
+    overflowY: "auto",
+  },
+  "#root": {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
+};
+
+const AppContent = () => {
+  const { gradientBackground } = useThemeContext();
+
   return (
-    <ThemeProvider theme={lightTheme}>
+    <>
+      <GlobalStyles styles={globalStyles} />
       <CssBaseline />
       <Router>
         <Box
           sx={{
             minHeight: "100vh",
-            background: (theme) =>
-              `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+            background: gradientBackground,
+            transition: "background 0.3s ease",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          <Container maxWidth="lg" sx={{ py: 4 }}>
-            <Routes>
-              <Route path="/" element={<PostsPage />} />
-              <Route path="/post/:id" element={<PostPage />} />
-            </Routes>
-          </Container>
+          <Routes>
+            <Route path="/" element={<PostsPage />} />
+            <Route path="/post/:id" element={<PostPage />} />
+          </Routes>
         </Box>
       </Router>
-    </ThemeProvider>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <CustomThemeProvider>
+      <AppContent />
+    </CustomThemeProvider>
   );
 }
 

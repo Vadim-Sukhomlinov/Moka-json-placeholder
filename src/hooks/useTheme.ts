@@ -39,7 +39,6 @@ export const useTheme = (): UseThemeReturn => {
     };
 };
 
-// Для использования с Context API (опционально)
 export const getThemeGradient = (theme: Theme) => {
     return `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`;
 };
