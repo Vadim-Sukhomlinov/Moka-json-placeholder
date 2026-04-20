@@ -1,4 +1,3 @@
-// src/pages/PostPage.tsx
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -24,7 +23,8 @@ import {
     Comment,
     Refresh,
 } from "@mui/icons-material";
-import { type Post } from "../types/index";
+import { type Post } from "../types";
+import { postCache } from "../utils/cache";
 
 const API_URL = "https://json-placeholder.mock.beeceptor.com/posts";
 
@@ -41,6 +41,17 @@ const PostPage = () => {
             setError(null);
 
             try {
+                const cacheKey = `post-${id}`;
+
+                const cachedPost = postCache.get(cacheKey);
+                if (cachedPost) {
+                    console.log("Пост загружен из кэша:", cachedPost.id);
+                    setPost(cachedPost);
+                    setLoading(false);
+                    return;
+                }
+
+                console.log("Загрузка поста с сервера...");
                 const response = await fetch(`${API_URL}/${id}`);
 
                 if (!response.ok) {
@@ -48,6 +59,10 @@ const PostPage = () => {
                 }
 
                 const postData = await response.json();
+
+                postCache.set(cacheKey, postData);
+                console.log("Пост сохранен в кэш:", postData.id);
+
                 setPost(postData);
             } catch (error) {
                 console.error("Ошибка загрузки поста:", error);
@@ -74,6 +89,9 @@ const PostPage = () => {
     };
 
     const handleRetry = () => {
+        if (id) {
+            postCache.delete(`post-${id}`);
+        }
         window.location.reload();
     };
 
@@ -86,11 +104,11 @@ const PostPage = () => {
                     alignItems: "center",
                     justifyContent: "center",
                     minHeight: "60vh",
-                    gap: 2,
+                    gap: 3,
                 }}
             >
-                <CircularProgress size={50} thickness={3} />
-                <Typography variant="body1" color="white">
+                <CircularProgress size={60} thickness={3} />
+                <Typography variant="h6" color="white">
                     Загрузка поста...
                 </Typography>
             </Box>
@@ -105,28 +123,13 @@ const PostPage = () => {
                     icon={<span style={{ fontSize: "2rem" }}>⚠️</span>}
                     sx={{ mt: 4 }}
                     action={
-                        <Stack direction="row" spacing={1}>
-                            <Button color="inherit" size="small" onClick={handleRetry}>
-                                <Refresh />
-                            </Button>
-                        </Stack>
+                        <Button color="inherit" size="small" onClick={handleRetry} startIcon={<Refresh />}>
+                            Повторить
+                        </Button>
                     }
                 >
                     <AlertTitle>Ошибка загрузки</AlertTitle>
                     {error || "Пост не найден"}
-                    <Box sx={{ mt: 2 }}>
-                        <Button
-                            variant="contained"
-                            onClick={handleRetry}
-                            startIcon={<Refresh />}
-                            sx={{ mr: 1 }}
-                        >
-                            Попробовать снова
-                        </Button>
-                        <Button variant="outlined" onClick={handleGoBack}>
-                            Вернуться к списку
-                        </Button>
-                    </Box>
                 </Alert>
             </Container>
         );

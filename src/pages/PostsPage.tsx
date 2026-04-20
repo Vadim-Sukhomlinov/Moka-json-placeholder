@@ -1,4 +1,3 @@
-// src/pages/PostsPage.tsx
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
@@ -15,6 +14,7 @@ import { Refresh, Article } from "@mui/icons-material";
 import PostCard from "../components/PostCard";
 import Pagination from "../components/Pagination";
 import { type Post } from "../types";
+import { postsCache } from "../utils/cache";
 
 const POSTS_PER_PAGE = 4;
 const API_URL = "https://json-placeholder.mock.beeceptor.com/posts";
@@ -34,6 +34,15 @@ const PostsPage = () => {
             setError(null);
 
             try {
+                const cachedPosts = postsCache.get("all-posts");
+                if (cachedPosts) {
+                    console.log("Загружено из кэша:", cachedPosts.length, "постов");
+                    setPosts(cachedPosts);
+                    setLoading(false);
+                    return;
+                }
+
+                console.log("Загрузка с сервера...");
                 const response = await fetch(API_URL);
 
                 if (!response.ok) {
@@ -41,6 +50,10 @@ const PostsPage = () => {
                 }
 
                 const allPosts: Post[] = await response.json();
+
+                postsCache.set("all-posts", allPosts);
+                console.log("Сохранено в кэш:", allPosts.length, "постов");
+
                 setPosts(allPosts);
             } catch (error) {
                 console.error("Ошибка загрузки постов:", error);
@@ -69,6 +82,7 @@ const PostsPage = () => {
     };
 
     const handleRetry = () => {
+        postsCache.delete("all-posts");
         window.location.reload();
     };
 
@@ -93,7 +107,6 @@ const PostsPage = () => {
         );
     }
 
-    // Состояние ошибки
     if (error) {
         return (
             <Container maxWidth="md">
@@ -114,7 +127,6 @@ const PostsPage = () => {
         );
     }
 
-    // Создаем массив для плейсхолдеров
     const placeholdersCount = Math.max(0, POSTS_PER_PAGE - currentPosts.length);
     const placeholders = Array(placeholdersCount).fill(null);
 
